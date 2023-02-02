@@ -1,5 +1,7 @@
 export class Homepage {
 
+    static searchBlockHeader = "#search_form .searchblock-text"
+
     /**
      * @param {en|ru|ka} lang 
      */
@@ -10,4 +12,5 @@ export class Homepage {
     static closePhishingBanner() {
         return cy.get('#Modal1').invoke('remove')
     }
+
 }
