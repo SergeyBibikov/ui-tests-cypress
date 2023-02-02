@@ -1,5 +1,5 @@
 def CreateNMLink() {
-    if (!fileExists('node_modules') {
+    if (!fileExists('node_modules')) {
         sh 'ln -s /home/node/temp/node_modules node_modules'
     }
 }
@@ -8,10 +8,10 @@ def CypressRun(options){
 }
 
 def ClearMedia(){
-    if (fileExists('media') {
+    if (fileExists('media')) {
         sh 'rm -r media'
     }
-    if (fileExists('.media') {
+    if (fileExists('.media')) {
         sh 'rm -r .media'
     }
 }
