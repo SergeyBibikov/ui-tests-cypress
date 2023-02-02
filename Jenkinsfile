@@ -1,5 +1,5 @@
 def CreateNMLink() {
-    sh "[ ! -f node_modules ] && ln -s /home/node/temp/node_modules node_modules"
+    sh "[ ! -d node_modules ] && ln -s /home/node/temp/node_modules node_modules"
 }
 def CypressRun(options){
     sh "npx cypress run ${options}"
@@ -19,19 +19,19 @@ pipeline {
     }
     
     stages {
-        stage("Clear media"){
+        stage("Tests setup"){
             steps{
-                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS'){
-                    sh 'rm -r media; rm -r .media'    
-                }
+                sh '[ -d media ] && rm -r media'    
+                sh '[ -d .media ] && rm -r .media'    
+                CreateNMLink()
             }
         }
+        stage
         stage('Test') {
             parallel{
                 stage('Electron'){
                      steps {
                         catchError {
-                            CreateNMLink()
                             CypressRun()
                         }
                      }
@@ -40,7 +40,6 @@ pipeline {
                 stage('Chrome'){
                      steps {
                         catchError {
-                            CreateNMLink()
                             CypressRun("--browser chrome")
                         }
                      }
@@ -49,7 +48,6 @@ pipeline {
                 stage('Firefox'){
                      steps {
                         catchError {
-                            CreateNMLink()
                             CypressRun("--browser firefox")
                         }
                     }
@@ -58,7 +56,7 @@ pipeline {
             }
            
         }
-        stage('Cleanup'){
+        stage('Tests cleanup'){
             steps{
                 catchError{
                     sh 'mkdir .media'
