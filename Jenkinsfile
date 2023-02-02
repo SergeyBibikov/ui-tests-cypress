@@ -26,7 +26,7 @@ pipeline {
     stages {
         stage("Tests setup"){
             steps{
-                catchError(builtResult:'SUCCESS', stageResult: 'SUCCESS') {
+                catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS') {
                     ClearMedia()
                     CreateNMLink()
                 }
@@ -64,7 +64,7 @@ pipeline {
         }
         stage('Tests cleanup'){
             steps{
-                catchError(builtResult:'SUCCESS', stageResult: 'SUCCESS'){
+                catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS'){
                     sh 'mkdir .media'
                     sh 'cp -r ./cypress/videos/ .media/'
                     sh '[ -d "./cypress/screenshots" ] && cp -r ./cypress/screenshots/ .media/'   
