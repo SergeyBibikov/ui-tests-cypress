@@ -5,6 +5,11 @@ def CypressRun(options){
     sh "npx cypress run ${options}"
 }
 
+def ClearMedia(){
+    sh '[ -d media ] && rm -r media'    
+    sh '[ -d .media ] && rm -r .media' 
+}
+
 pipeline {
     
     agent { 
@@ -21,10 +26,12 @@ pipeline {
     stages {
         stage("Tests setup"){
             steps{
-                sh '[ -d media ] && rm -r media'    
-                sh '[ -d .media ] && rm -r .media'    
-                CreateNMLink()
+                catchError(builtResult:'SUCCESS', stageResult: 'SUCCESS') {
+                    ClearMedia()
+                    CreateNMLink()
+                }
             }
+            
         }
         stage('Test') {
             parallel{
@@ -57,13 +64,11 @@ pipeline {
         }
         stage('Tests cleanup'){
             steps{
-                catchError{
+                catchError(builtResult:'SUCCESS', stageResult: 'SUCCESS'){
                     sh 'mkdir .media'
                     sh 'cp -r ./cypress/videos/ .media/'
                     sh '[ -d "./cypress/screenshots" ] && cp -r ./cypress/screenshots/ .media/'   
-                }
-                sh 'rm -r ./*'
-                catchError{
+                    sh 'rm -r ./*'
                     sh 'mv .media media'    
                 }
                 
