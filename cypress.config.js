@@ -8,7 +8,6 @@ module.exports = defineConfig({
       "www.youtube.com",
       "banners.myads.ge",
       "360.tbcconnect.ge",
-      "www.facebook.com"
     ],
     setupNodeEvents(on, config) { },
   },
