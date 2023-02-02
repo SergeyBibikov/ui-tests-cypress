@@ -1,13 +1,19 @@
 def CreateNMLink() {
-    sh "[ ! -d node_modules ] && ln -s /home/node/temp/node_modules node_modules"
+    if (!fileExists('node_modules') {
+        sh 'ln -s /home/node/temp/node_modules node_modules'
+    }
 }
 def CypressRun(options){
     sh "npx cypress run ${options}"
 }
 
 def ClearMedia(){
-    sh '[ -d media ] && rm -r media'    
-    sh '[ -d .media ] && rm -r .media' 
+    if (fileExists('media') {
+        sh 'rm -r media'
+    }
+    if (fileExists('.media') {
+        sh 'rm -r .media'
+    }
 }
 
 pipeline {
