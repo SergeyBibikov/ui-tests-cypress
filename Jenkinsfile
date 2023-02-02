@@ -21,6 +21,15 @@ pipeline {
         }
         stage('Test') {
             parallel{
+                stage('Electron'){
+                     steps {
+                        catchError {
+                            sh 'ln -s /home/node/temp/node_modules node_modules'
+                            sh 'npx cypress run'
+                        }
+                     }
+                    
+                }
                 stage('Chrome'){
                      steps {
                         catchError {
