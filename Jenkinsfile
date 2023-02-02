@@ -44,7 +44,7 @@ pipeline {
                 stage('Electron'){
                      steps {
                         catchError {
-                            CypressRun()
+                            CypressRun("")
                         }
                      }
                     
