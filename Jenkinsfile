@@ -45,7 +45,9 @@ pipeline {
         stage('Cleanup'){
             steps{
                 catchError{
-                    sh 'mkdir .media && cp -r ./cypress/screenshots/ .media/ && cp -r ./cypress/videos/ .media/'    
+                    sh 'mkdir .media'
+                    sh 'cp -r ./cypress/videos/ .media/'
+                    sh '[ -d "./cypress/screenshots" ] && cp -r ./cypress/screenshots/ .media/'   
                 }
                 sh 'rm -r ./*'
                 catchError{
