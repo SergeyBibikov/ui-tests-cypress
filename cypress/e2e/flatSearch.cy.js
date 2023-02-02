@@ -5,27 +5,42 @@ import { Homepage } from "../pageObjects/homepage";
 
 
 describe('Homepage spec', () => {
+  beforeEach(() => {
+    cy.intercept('https://www.facebook.com/**', { statusCode: 503 })
+    cy.intercept('**ban**', { statusCode: 503 })
 
-  context('Anti fishing banner', () => {
+    cy.visit('');
+  })
 
-    const PHISHING_BANNER_KA = 'img[src*="fishing_popup_ka.png"]'
-    const PHISHING_BANNER_EN = 'img[src*="fishing_popup_en.png"]'
-    const PHISHING_BANNER_RU = 'img[src*="fishing_popup_ru.png"]'
+  context('Language and anti-phishing banner', () => {
 
-    it('Anti phishing banner is shown after the language is changed', () => {
-      cy.visit('');
-      cy.get(PHISHING_BANNER_KA).should('be.visible')
+    const phishingBannerGe = 'img[src*="fishing_popup_ka.png"]'
+    const phishingBannerEn = 'img[src*="fishing_popup_en.png"]'
+    const phishingBannerRu = 'img[src*="fishing_popup_ru.png"]'
+
+    const expectedTextGe = 'მარტივი გზა შენს ახალ სახლამდე'
+    const expectedTextEn = 'The easiest way to your new home'
+    const expectedTextRu = 'простой путь к твоему новому дому'
+
+    it(`Anti-phishing banner should show on each language change and 
+        page text should have selected language`, () => {
+
+      cy.get(phishingBannerGe).should('be.visible')
+      cy.get(Homepage.searchBlockHeader).should('have.text', expectedTextGe)
+
       Homepage.changeLanguage('en');
-      cy.get(PHISHING_BANNER_EN).should('be.visible')
+      cy.get(phishingBannerEn).should('be.visible')
+      cy.get(Homepage.searchBlockHeader).should('have.text', expectedTextEn)
+
       Homepage.changeLanguage('ru');
-      cy.get(PHISHING_BANNER_RU).should('be.visible')
+      cy.get(phishingBannerRu).should('be.visible')
+      cy.get(Homepage.searchBlockHeader).should('have.text', expectedTextRu)
     })
 
   })
 
   context('Propery search', () => {
     beforeEach(() => {
-      cy.visit('');
       Homepage.closePhishingBanner();
     })
 
