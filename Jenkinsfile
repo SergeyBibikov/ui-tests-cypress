@@ -1,3 +1,10 @@
+def CreateNMLink() {
+    [ ! -f node_modules ] && ln -s /home/node/temp/node_modules node_modules
+}
+def CypressRun(options){
+    npx cypress run ${options}
+}
+
 pipeline {
     
     agent { 
@@ -24,8 +31,8 @@ pipeline {
                 stage('Electron'){
                      steps {
                         catchError {
-                            sh 'ln -s /home/node/temp/node_modules node_modules'
-                            sh 'npx cypress run'
+                            CreateNMLink()
+                            CypressRun()
                         }
                      }
                     
@@ -33,8 +40,8 @@ pipeline {
                 stage('Chrome'){
                      steps {
                         catchError {
-                            sh 'ln -s /home/node/temp/node_modules node_modules'
-                            sh 'npx cypress run --browser chrome'
+                            CreateNMLink()
+                            CypressRun("--browser chrome")
                         }
                      }
                     
@@ -42,8 +49,8 @@ pipeline {
                 stage('Firefox'){
                      steps {
                         catchError {
-                            sh 'ln -s /home/node/temp/node_modules node_modules'
-                            sh 'npx cypress run --browser firefox'
+                            CreateNMLink()
+                            CypressRun("--browser firefox")
                         }
                     }
                     
