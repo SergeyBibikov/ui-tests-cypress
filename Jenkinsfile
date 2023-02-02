@@ -73,7 +73,9 @@ pipeline {
                 catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS'){
                     sh 'mkdir .media'
                     sh 'cp -r ./cypress/videos/ .media/'
-                    sh '[ -d "./cypress/screenshots" ] && cp -r ./cypress/screenshots/ .media/'   
+                    if (fileExists('./cypress/screenshots')){
+                        sh 'cp -r ./cypress/screenshots/ .media/'   
+                    }
                     sh 'rm -r ./*'
                     sh 'mv .media media'    
                 }
