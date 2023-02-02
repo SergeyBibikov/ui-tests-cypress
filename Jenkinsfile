@@ -16,6 +16,16 @@ def ClearMedia(){
     }
 }
 
+def MoveMediaAfterTests(){
+    sh 'mkdir .media'
+    sh 'cp -r ./cypress/videos/ .media/'
+    if (fileExists('./cypress/screenshots')){
+        sh 'cp -r ./cypress/screenshots/ .media/'   
+    }
+    sh 'rm -r ./*'
+    sh 'mv .media media'    
+}
+
 pipeline {
     
     agent { 
@@ -71,13 +81,7 @@ pipeline {
         stage('Tests cleanup'){
             steps{
                 catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS'){
-                    sh 'mkdir .media'
-                    sh 'cp -r ./cypress/videos/ .media/'
-                    if (fileExists('./cypress/screenshots')){
-                        sh 'cp -r ./cypress/screenshots/ .media/'   
-                    }
-                    sh 'rm -r ./*'
-                    sh 'mv .media media'    
+                    MoveMediaAfterTests()
                 }
                 
             }
