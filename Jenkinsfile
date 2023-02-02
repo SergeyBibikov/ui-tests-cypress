@@ -1,8 +1,8 @@
 def CreateNMLink() {
-    [ ! -f node_modules ] && ln -s /home/node/temp/node_modules node_modules
+    sh "[ ! -f node_modules ] && ln -s /home/node/temp/node_modules node_modules"
 }
 def CypressRun(options){
-    npx cypress run ${options}
+    sh "npx cypress run ${options}"
 }
 
 pipeline {
