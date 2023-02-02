@@ -26,7 +26,6 @@ pipeline {
                 CreateNMLink()
             }
         }
-        stage
         stage('Test') {
             parallel{
                 stage('Electron'){
