@@ -7,9 +7,9 @@
     "test": "npx cypress run",
     "open": "npx cypress open",
     "buildPipeline": "curl --user Admin:$JENKINS_TOKEN $JENKINS_HOST/job/cypress_pipeline/build?token=runCypressTests",
-    "copyFiles": "cp -r cypress $JENKINS_PIPELINE_WORKDIR && cp cypress.config.js $JENKINS_PIPELINE_WORKDIR",
+    "copyFiles": "cp -r cypress $JENKINS_PIPELINE_WORKDIR && cp cypress.config.ts $JENKINS_PIPELINE_WORKDIR",
     "cypressPipeline": ". ./exportVars.sh && npm run copyFiles && npm run buildPipeline",
-    "push": "git push && npm run cypressPipeline"
+    "push": "git push && npm run cypressPipeline && firefox localhost:8080"
   },
   "repository": {
     "type": "git",
