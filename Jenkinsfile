@@ -53,7 +53,7 @@ pipeline {
             parallel{
                 stage('Electron'){
                      steps {
-                        catchError {
+                        catchError(stageResult: 'FAILURE') {
                             CypressRun("")
                         }
                      }
@@ -61,7 +61,7 @@ pipeline {
                 }
                 stage('Chrome'){
                      steps {
-                        catchError {
+                        catchError(stageResult: 'FAILURE') {
                             CypressRun("--browser chrome")
                         }
                      }
@@ -69,7 +69,7 @@ pipeline {
                 }
                 stage('Firefox'){
                      steps {
-                        catchError {
+                        catchError(stageResult: 'FAILURE') {
                             CypressRun("--browser firefox")
                         }
                     }
