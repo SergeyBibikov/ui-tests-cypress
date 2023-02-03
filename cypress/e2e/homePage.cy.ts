@@ -1,4 +1,3 @@
-/// <reference types= "cypress" />
 import { Homepage } from "../pageObjects/homepage";
 
 

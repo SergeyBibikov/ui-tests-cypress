@@ -1,12 +1,11 @@
+type Language = 'en' | 'ru' | 'ka'
+
 export class Homepage {
 
     static searchBlockHeader = "#search_form .searchblock-text"
 
-    /**
-     * @param {en|ru|ka} lang 
-     */
-    static changeLanguage(lang) {
-        return cy.get(`a[class*="dropdown-item"][data-code="${lang}"]`).click({ force: true })
+    static changeLanguage(newLang: Language) {
+        return cy.get(`a[class*="dropdown-item"][data-code="${newLang}"]`).click({ force: true })
     }
 
     static closePhishingBanner() {
