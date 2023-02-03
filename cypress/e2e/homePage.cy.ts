@@ -39,12 +39,26 @@ describe('Homepage spec', () => {
   })
 
   context('Propery search', () => {
+
     beforeEach(() => {
       Homepage.closePhishingBanner();
     })
 
+    const SEARCH_FILTERS = "#adtypepos > div"
+
     it('Deal type filters should have 5 types', function () {
 
+      const expectedTexts = ['იყიდება', 'გირავდება', 'ქირავდება', 'ქირავდება დღიურად', 'გაიცემა იჯარით']
+
+      cy.get(SEARCH_FILTERS)
+        .find('div > a')
+        .should('have.length', 5)
+        .each((el) => {
+          const elText = el.text()
+          expect(expectedTexts).to.include(elText)
+          //removing checked filters to test on-the way that there are no duplicates in filters on the page
+          Cypress._.remove(expectedTexts, (e) => e === elText)
+        })
     })
   })
 
