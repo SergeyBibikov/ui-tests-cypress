@@ -48,17 +48,54 @@ describe('Homepage spec', () => {
 
     it('Deal type filters should have 5 types', function () {
 
-      const expectedTexts = ['იყიდება', 'გირავდება', 'ქირავდება', 'ქირავდება დღიურად', 'გაიცემა იჯარით']
+      const DEAL_TYPES = 'div > a'
+
+      const expectedTypes = [
+        'იყიდება',
+        'გირავდება',
+        'ქირავდება',
+        'ქირავდება დღიურად',
+        'გაიცემა იჯარით'
+      ]
+      const actualTypes = []
 
       cy.get(SEARCH_FILTERS)
-        .find('div > a')
+        .find(DEAL_TYPES)
         .should('have.length', 5)
         .each((el) => {
-          const elText = el.text()
-          expect(expectedTexts).to.include(elText)
-          //removing checked filters to test on-the way that there are no duplicates in filters on the page
-          Cypress._.remove(expectedTexts, (e) => e === elText)
+          actualTypes.push(el.text())
         })
+
+      cy
+        .wrap(actualTypes)
+        .should('deep.equal', expectedTypes)
+    })
+
+    it('Estate type filters should have 5 types', function () {
+
+      const ESTATE_TYPES = 'ul>li span'
+
+      const expectedTypes = [
+        'ბინები',
+        'სახლები და აგარაკები',
+        'კომერციული ფართები',
+        'მიწის ნაკვეთები',
+        'სასტუმროები'
+      ]
+
+      const actualTypes = []
+      cy
+        .get(SEARCH_FILTERS)
+        .find(ESTATE_TYPES)
+        .should('have.length', 5)
+        .each((el) => {
+          actualTypes.push(el.text())
+        })
+
+      cy
+        .wrap(actualTypes)
+        .should('deep.equal', expectedTypes)
+
     })
   })
 
