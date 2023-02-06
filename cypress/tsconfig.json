@@ -8,7 +8,9 @@
         ],
         "types": [
             "cypress",
-            "node"
+            "node",
+            "@cypress/grep",
+            "@cypress/skip-test"
         ]
     },
     "include": [

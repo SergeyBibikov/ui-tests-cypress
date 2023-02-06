@@ -1,6 +1,5 @@
 import { Homepage } from "../pageObjects/homepage";
-
-
+import { skipOn, isOn, onlyOn } from "@cypress/skip-test";
 
 
 describe('Homepage spec', () => {
@@ -95,6 +94,16 @@ describe('Homepage spec', () => {
       cy
         .wrap(actualTypes)
         .should('deep.equal', expectedTypes)
+
+    })
+
+    it('debug', function () {
+      onlyOn('firefox')
+      cy.wrap([1, 2, 3]).then((ar) => {
+        return ar.length > 2
+      }).then((a) => {
+        cy.task('log', [a])
+      })
 
     })
   })

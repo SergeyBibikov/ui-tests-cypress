@@ -11,11 +11,16 @@ module.exports = defineConfig({
       "360.tbcconnect.ge",
     ],
     setupNodeEvents(on, config) {
+      //Events
       on('task', {
 
         log(valToLog: any[]) { return cl(valToLog) }
 
       })
+
+      //Plugins      
+      require('@cypress/grep/src/plugin')(config);
+      return config;
     },
   },
 });
