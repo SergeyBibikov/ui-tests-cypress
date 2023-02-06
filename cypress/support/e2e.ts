@@ -17,7 +17,7 @@
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-import './commands'
+import './commands';
 
-const registerGrep = require('@cypress/grep')
-registerGrep()
+const registerGrep = require('@cypress/grep');
+registerGrep();
