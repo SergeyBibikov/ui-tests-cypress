@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+import { log as cl } from './cypress/support/tasks'
 
 module.exports = defineConfig({
   e2e: {
@@ -9,6 +10,12 @@ module.exports = defineConfig({
       "banners.myads.ge",
       "360.tbcconnect.ge",
     ],
-    setupNodeEvents(on, config) { },
+    setupNodeEvents(on, config) {
+      on('task', {
+
+        log(valToLog: any[]) { return cl(valToLog) }
+
+      })
+    },
   },
 });
