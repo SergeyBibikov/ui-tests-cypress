@@ -10,6 +10,12 @@ module.exports = defineConfig({
       "banners.myads.ge",
       "360.tbcconnect.ge",
     ],
+
+    env: {
+      allure: true,
+      allureAvoidLoggingCommands: ['intercept']
+    },
+
     setupNodeEvents(on, config) {
       //Events
       on('task', {
@@ -20,6 +26,8 @@ module.exports = defineConfig({
 
       //Plugins      
       require('@cypress/grep/src/plugin')(config);
+      require('@shelex/cypress-allure-plugin/writer')(on, config);
+
       return config;
     },
   },

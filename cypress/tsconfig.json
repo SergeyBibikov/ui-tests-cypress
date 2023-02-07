@@ -10,7 +10,8 @@
             "cypress",
             "node",
             "@cypress/grep",
-            "@cypress/skip-test"
+            "@cypress/skip-test",
+            "@shelex/cypress-allure-plugin"
         ]
     },
     "include": [

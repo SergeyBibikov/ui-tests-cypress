@@ -18,6 +18,7 @@
 // require('./commands')
 
 import './commands';
+import '@shelex/cypress-allure-plugin';
 
 const registerGrep = require('@cypress/grep');
 registerGrep();
