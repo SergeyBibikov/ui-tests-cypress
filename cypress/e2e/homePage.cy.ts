@@ -1,6 +1,10 @@
 import { Homepage } from "../pageObjects/homepage";
 import { shouldBeVisible, shouldHaveText } from "../allureSteps/assertions"
+const a = Cypress.Allure.reporter.getInterface()
 describe('Homepage spec', () => {
+
+  a.epic('Homepage')
+
   beforeEach(() => {
     cy.intercept('https://www.facebook.com/**', { statusCode: 503 })
     cy.intercept('**ban**', { statusCode: 503 })
@@ -9,6 +13,8 @@ describe('Homepage spec', () => {
   })
 
   context('Language and anti-phishing banner', () => {
+
+    a.feature('I18N')
 
     const phishingBannerGe = 'img[src*="fishing_popup_ka.png"]'
     const phishingBannerEn = 'img[src*="fishing_popup_en.png"]'
@@ -94,7 +100,6 @@ describe('Homepage spec', () => {
       cy
         .wrap(actualTypes)
         .should('deep.equal', expectedTypes)
-
     })
 
   })
