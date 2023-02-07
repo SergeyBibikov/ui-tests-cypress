@@ -1,12 +1,11 @@
 import { Homepage } from "../pageObjects/homepage";
-
-
+import { shouldBeVisible, shouldHaveText } from "../allureSteps/assertions"
 describe('Homepage spec', () => {
   beforeEach(() => {
     cy.intercept('https://www.facebook.com/**', { statusCode: 503 })
     cy.intercept('**ban**', { statusCode: 503 })
 
-    cy.visit('');
+    Homepage.open();
   })
 
   context('Language and anti-phishing banner', () => {
@@ -22,16 +21,18 @@ describe('Homepage spec', () => {
     it(`Anti-phishing banner should show on each language change and 
         page text should have selected language`, () => {
 
-      cy.get(phishingBannerGe).should('be.visible')
-      cy.get(Homepage.searchBlockHeader).should('have.text', expectedTextGe)
+      const checks = (bannerLoc, lang, expectedText: string,) => {
+        shouldBeVisible(bannerLoc, `anti phishing banner in ${lang}`)
+        shouldHaveText(Homepage.searchBlockHeader, expectedText, "search block header")
+      }
+
+      checks(phishingBannerGe, "Georgian", expectedTextGe)
 
       Homepage.changeLanguage('en');
-      cy.get(phishingBannerEn).should('be.visible')
-      cy.get(Homepage.searchBlockHeader).should('have.text', expectedTextEn)
+      checks(phishingBannerEn, "English", expectedTextEn)
 
       Homepage.changeLanguage('ru');
-      cy.get(phishingBannerRu).should('be.visible')
-      cy.get(Homepage.searchBlockHeader).should('have.text', expectedTextRu)
+      checks(phishingBannerRu, "Russian", expectedTextRu)
     })
 
   })
