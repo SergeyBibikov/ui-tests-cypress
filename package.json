@@ -27,6 +27,7 @@
     "@cypress/skip-test": "^2.6.1",
     "@shelex/cypress-allure-plugin": "^2.35.2",
     "cypress": "^12.5.0",
+    "cypress-real-events": "^1.7.6",
     "typescript": "^4.9.5"
   }
 }

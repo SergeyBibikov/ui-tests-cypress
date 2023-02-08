@@ -11,7 +11,8 @@
             "node",
             "@cypress/grep",
             "@cypress/skip-test",
-            "@shelex/cypress-allure-plugin"
+            "@shelex/cypress-allure-plugin",
+            "cypress-real-events"
         ]
     },
     "include": [

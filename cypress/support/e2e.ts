@@ -19,6 +19,7 @@
 
 import './commands';
 import '@shelex/cypress-allure-plugin';
+import 'cypress-real-events';
 
 const registerGrep = require('@cypress/grep');
 registerGrep();

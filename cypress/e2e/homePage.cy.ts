@@ -1,6 +1,8 @@
 import { Homepage } from "../pageObjects/homepage";
 import { shouldBeVisible, shouldHaveText } from "../allureSteps/assertions"
+import { skipOn } from "@cypress/skip-test"
 const a = Cypress.Allure.reporter.getInterface()
+
 describe('Homepage spec', () => {
 
   a.epic('Homepage')
@@ -102,6 +104,42 @@ describe('Homepage spec', () => {
         .should('deep.equal', expectedTypes)
     })
 
+  })
+  skipOn('firefox', () => {
+
+    context('Real events', () => {
+
+      beforeEach(() => {
+        skipOn('firefox')
+      })
+      it('Login button should change background color on hover', function () {
+        cy
+          .get('.header-buttons-container')
+          .find('a')
+          .eq(1)
+          .as('loginButton')
+          .invoke('css', 'backgroundColor')
+          .should('eq', 'rgb(241, 243, 246)')
+
+        Homepage.closePhishingBanner();
+
+        cy
+          .get('@loginButton')
+          .realHover()
+          .invoke('css', 'backgroundColor')
+          .should('eq', 'rgb(201, 236, 210)')
+      })
+      it('User should be able to open ipoteka page using keyboard', function () {
+
+        Homepage.closePhishingBanner();
+        cy.get('header').click();
+        cy.realPress('Tab')
+        cy.realPress('Tab')
+        cy.realPress('Enter')
+        cy.url().should('contain', 'ipoteka')
+
+      })
+    })
   })
 
 })
