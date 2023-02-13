@@ -43,6 +43,12 @@ pipeline {
     
     stages {
         stage("Tests setup"){
+            agent { 
+                docker { 
+                    image 'customcypress' 
+                    args "-t"
+                }
+            }
             steps{
                 catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS') {
                     ClearMedia()
@@ -99,6 +105,12 @@ pipeline {
            
         }
         stage('Tests cleanup'){
+            agent { 
+                docker { 
+                    image 'customcypress' 
+                    args "-t"
+                }
+            }
             steps{
                 catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS'){
                     MoveMediaAfterTests()
