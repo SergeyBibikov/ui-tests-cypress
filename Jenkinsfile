@@ -52,7 +52,6 @@ pipeline {
             steps{
                 catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS') {
                     ClearMedia()
-                    CreateNMLink()
                 }
             }
             
@@ -68,6 +67,7 @@ pipeline {
                     }
                      steps {
                         catchError(stageResult: 'FAILURE') {
+                            CreateNMLink()
                             CypressRun("")
                         }
                      }
@@ -82,6 +82,7 @@ pipeline {
                     }
                      steps {
                         catchError(stageResult: 'FAILURE') {
+                            CreateNMLink()
                             CypressRun("--browser chrome")
                         }
                      }
@@ -96,6 +97,7 @@ pipeline {
                     }
                      steps {
                         catchError(stageResult: 'FAILURE') {
+                            CreateNMLink()
                             CypressRun("--browser firefox")
                         }
                     }
