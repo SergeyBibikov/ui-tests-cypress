@@ -27,13 +27,15 @@ def MoveMediaAfterTests(){
 }
 
 pipeline {
+
+    agent none
     
-    agent { 
-        docker { 
-            image 'customcypress' 
-            args "-t"
-        }
-    }
+    // agent { 
+    //     docker { 
+    //         image 'customcypress' 
+    //         args "-t"
+    //     }
+    // }
     
     options {
         ansiColor('xterm')
