@@ -52,6 +52,12 @@ pipeline {
         stage('Test') {
             parallel{
                 stage('Electron'){
+                    agent { 
+                        docker { 
+                            image 'customcypress' 
+                            args "-t"
+                        }
+                    }
                      steps {
                         catchError(stageResult: 'FAILURE') {
                             CypressRun("")
@@ -60,6 +66,12 @@ pipeline {
                     
                 }
                 stage('Chrome'){
+                    agent { 
+                        docker { 
+                            image 'customcypress' 
+                            args "-t"
+                        }
+                    }
                      steps {
                         catchError(stageResult: 'FAILURE') {
                             CypressRun("--browser chrome")
@@ -68,6 +80,12 @@ pipeline {
                     
                 }
                 stage('Firefox'){
+                    agent { 
+                        docker { 
+                            image 'customcypress' 
+                            args "-t"
+                        }
+                    }
                      steps {
                         catchError(stageResult: 'FAILURE') {
                             CypressRun("--browser firefox")
