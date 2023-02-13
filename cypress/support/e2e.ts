@@ -20,6 +20,7 @@
 import './commands';
 import '@shelex/cypress-allure-plugin';
 import 'cypress-real-events';
+import '@4tw/cypress-drag-drop';
 
 const registerGrep = require('@cypress/grep');
 registerGrep();

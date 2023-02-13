@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/SergeyBibikov/ui-tests-cypress#readme",
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.3",
     "@cypress/grep": "^3.1.3",
     "@cypress/skip-test": "^2.6.1",
     "@shelex/cypress-allure-plugin": "^2.35.2",

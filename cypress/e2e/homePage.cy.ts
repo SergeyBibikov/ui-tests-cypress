@@ -105,6 +105,7 @@ describe('Homepage spec', () => {
     })
 
   })
+
   skipOn('firefox', () => {
 
     context('Real events', () => {

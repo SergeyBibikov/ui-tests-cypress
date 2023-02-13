@@ -12,7 +12,8 @@
             "@cypress/grep",
             "@cypress/skip-test",
             "@shelex/cypress-allure-plugin",
-            "cypress-real-events"
+            "cypress-real-events",
+            "@4tw/cypress-drag-drop"
         ]
     },
     "include": [
