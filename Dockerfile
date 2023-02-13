@@ -2,8 +2,12 @@ FROM cypress/browsers:latest
 
 USER 1000
 
-WORKDIR /home/node
+RUN mkdir /home/node/temp
 
-RUN mkdir temp && cd temp && npm init -y && npm i -D cypress typescript
+WORKDIR /home/node/temp
+
+COPY package.json /home/node/temp
+
+RUN npm i
 
 CMD ["npx", "cypress", "run"]
