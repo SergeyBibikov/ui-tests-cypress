@@ -4,10 +4,10 @@ def CypressRun(options){
 def SaveArtifacts(){
     if (fileExists('cypress/screenshots')){
         sh "touch cypress/screenshots/dummy"
-        archiveArtifacts artifacts: "cypress/screenshots/*", fingerprint: true         
+        archiveArtifacts "cypress/screenshots/*"       
     }
                 
-    archiveArtifacts artifacts: "cypress/videos/*", fingerprint: true  
+    archiveArtifacts "cypress/videos/*"
 }
 
 def ClearWorkspace(){
@@ -35,7 +35,13 @@ def MoveMediaAfterTests(){
 
 pipeline {
 
-    agent none
+    // agent none
+     agent { 
+        docker { 
+            image 'customcypress' 
+            args "-t"
+        }
+    }
        
     options {
         ansiColor('xterm')
@@ -57,14 +63,14 @@ pipeline {
             
         
         stage('Test') {
-            parallel{
+            // parallel{
                 stage('Electron'){
-                    agent { 
-                        docker { 
-                            image 'customcypress' 
-                            args "-t"
-                        }
-                    }
+                    // agent { 
+                    //     docker { 
+                    //         image 'customcypress' 
+                    //         args "-t"
+                    //     }
+                    // }
                      steps {
                         sh "cp -r /home/node/temp/* ."
 
@@ -78,12 +84,12 @@ pipeline {
                     
                 }
                 stage('Chrome'){
-                    agent { 
-                        docker { 
-                            image 'customcypress' 
-                            args "-t"
-                        }
-                    }
+                    // agent { 
+                    //     docker { 
+                    //         image 'customcypress' 
+                    //         args "-t"
+                    //     }
+                    // }
                      steps {
                         sh "cp -r /home/node/temp/* ."
 
@@ -97,12 +103,12 @@ pipeline {
                     
                 }
                 stage('Firefox'){
-                    agent { 
-                        docker { 
-                            image 'customcypress' 
-                            args "-t"
-                        }
-                    }
+                    // agent { 
+                    //     docker { 
+                    //         image 'customcypress' 
+                    //         args "-t"
+                    //     }
+                    // }
                      steps {
                         sh "cp -r /home/node/temp/* ."
 
@@ -115,7 +121,7 @@ pipeline {
                     }
                     
                 }
-            }
+            // }
            
         
         // stage('Clear Workspace'){
