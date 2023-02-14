@@ -33,6 +33,23 @@ def MoveMediaAfterTests(){
     sh 'mv .media media'    
 }
 
+def testStage(browserName = "electron"){
+    stage('Tests in $browserName'){
+
+        steps {
+            sh "cp -r /home/node/temp/* ."
+
+            catchError(stageResult: 'FAILURE') {
+                CypressRun(browserName)
+            }
+
+            SaveArtifacts()
+            ClearWorkspace()
+        }
+        
+    }
+}
+
 pipeline {
 
     // agent none
@@ -48,6 +65,7 @@ pipeline {
     }
     
     stages {
+        testStage()
         // stage("Tests setup"){
         //     agent { 
         //         docker { 
@@ -62,85 +80,85 @@ pipeline {
         //     }
             
         
-        stage('Test') {
-            // parallel{
-                stage('Electron'){
-                    // agent { 
-                    //     docker { 
-                    //         image 'customcypress' 
-                    //         args "-t"
-                    //     }
-                    // }
-                     steps {
-                        sh "cp -r /home/node/temp/* ."
+        // stage('Test') {
+        //     // parallel{
+        //         stage('Electron'){
+        //             // agent { 
+        //             //     docker { 
+        //             //         image 'customcypress' 
+        //             //         args "-t"
+        //             //     }
+        //             // }
+        //              steps {
+        //                 sh "cp -r /home/node/temp/* ."
 
-                        catchError(stageResult: 'FAILURE') {
-                            CypressRun("")
-                        }
+        //                 catchError(stageResult: 'FAILURE') {
+        //                     CypressRun("")
+        //                 }
 
-                        SaveArtifacts()
-                        ClearWorkspace()
-                     }
+        //                 SaveArtifacts()
+        //                 ClearWorkspace()
+        //              }
                     
-                }
-                stage('Chrome'){
-                    // agent { 
-                    //     docker { 
-                    //         image 'customcypress' 
-                    //         args "-t"
-                    //     }
-                    // }
-                     steps {
-                        sh "cp -r /home/node/temp/* ."
+        //         }
+        //         stage('Chrome'){
+        //             // agent { 
+        //             //     docker { 
+        //             //         image 'customcypress' 
+        //             //         args "-t"
+        //             //     }
+        //             // }
+        //              steps {
+        //                 sh "cp -r /home/node/temp/* ."
 
-                        catchError(stageResult: 'FAILURE') {
-                            CypressRun("--browser chrome")
-                        }
+        //                 catchError(stageResult: 'FAILURE') {
+        //                     CypressRun("--browser chrome")
+        //                 }
 
-                        SaveArtifacts()
-                        ClearWorkspace()
-                     }
+        //                 SaveArtifacts()
+        //                 ClearWorkspace()
+        //              }
                     
-                }
-                stage('Firefox'){
-                    // agent { 
-                    //     docker { 
-                    //         image 'customcypress' 
-                    //         args "-t"
-                    //     }
-                    // }
-                     steps {
-                        sh "cp -r /home/node/temp/* ."
+        //         }
+        //         stage('Firefox'){
+        //             // agent { 
+        //             //     docker { 
+        //             //         image 'customcypress' 
+        //             //         args "-t"
+        //             //     }
+        //             // }
+        //              steps {
+        //                 sh "cp -r /home/node/temp/* ."
 
-                        catchError(stageResult: 'FAILURE') {
-                            CypressRun("--browser firefox")
-                        }
+        //                 catchError(stageResult: 'FAILURE') {
+        //                     CypressRun("--browser firefox")
+        //                 }
 
-                        SaveArtifacts()
-                        ClearWorkspace()
-                    }
+        //                 SaveArtifacts()
+        //                 ClearWorkspace()
+        //             }
                     
-                }
-            // }
+        //         }
+        //     // }
            
         
-        // stage('Clear Workspace'){
-        //     agent { 
-        //         docker { 
-        //             image 'customcypress' 
-        //             args "-t"
-        //         }
-        //     }
-        //     steps{
+        // // stage('Clear Workspace'){
+        // //     agent { 
+        // //         docker { 
+        // //             image 'customcypress' 
+        // //             args "-t"
+        // //         }
+        // //     }
+        // //     steps{
 
-        //         sh "rm -rf ./*"
-        //         // catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS'){
-        //         //     MoveMediaAfterTests()
-        //         // }
+        // //         sh "rm -rf ./*"
+        // //         // catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS'){
+        // //         //     MoveMediaAfterTests()
+        // //         // }
                 
-        //     }
+        // //     }
+        // // }
         // }
-        }
     }
 }
 
