@@ -74,12 +74,7 @@ pipeline {
             }
         }
 
-        post{
-            always{
-                SaveArtifacts()
-                ClearWorkspace()
-            }
-        }
+     
         // stage("Tests setup"){
         //     agent { 
         //         docker { 
@@ -173,6 +168,13 @@ pipeline {
         // //     }
         // // }
         // }
+    }
+
+    post{
+        always{
+            SaveArtifacts()
+            ClearWorkspace()
+        }
     }
 }
 
