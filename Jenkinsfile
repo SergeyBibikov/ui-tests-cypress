@@ -1,10 +1,15 @@
-def CreateNMLink() {
-    if (!fileExists('node_modules')) {
-        sh 'ln -s /home/node/temp/node_modules node_modules'
-    }
-}
 def CypressRun(options){
     sh "npx cypress run ${options}"
+}
+def SaveArtifacts(){
+    sh "touch cypress/screenshots/dummy"
+                
+    archiveArtifacts "cypress/screenshots/*"        
+    archiveArtifacts "cypress/videos/*"
+}
+
+def ClearWorkspace(){
+    sh "rm -rf ./*"
 }
 
 def ClearMedia(){
@@ -29,31 +34,24 @@ def MoveMediaAfterTests(){
 pipeline {
 
     agent none
-    
-    // agent { 
-    //     docker { 
-    //         image 'customcypress' 
-    //         args "-t"
-    //     }
-    // }
-    
+       
     options {
         ansiColor('xterm')
     }
     
     stages {
-        stage("Tests setup"){
-            agent { 
-                docker { 
-                    image 'customcypress' 
-                    args "-t"
-                }
-            }
-            steps{
-                catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS') {
-                    ClearMedia()
-                }
-            }
+        // stage("Tests setup"){
+        //     agent { 
+        //         docker { 
+        //             image 'customcypress' 
+        //             args "-t"
+        //         }
+        //     }
+        //     steps{
+        //         catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS') {
+        //             ClearMedia()
+        //         }
+        //     }
             
         }
         stage('Test') {
@@ -66,10 +64,14 @@ pipeline {
                         }
                     }
                      steps {
+                        sh "cp -r /home/node/temp/* ."
+
                         catchError(stageResult: 'FAILURE') {
-                            CreateNMLink()
                             CypressRun("")
                         }
+
+                        SaveArtifacts()
+                        ClearWorkspace()
                      }
                     
                 }
@@ -81,10 +83,14 @@ pipeline {
                         }
                     }
                      steps {
+                        sh "cp -r /home/node/temp/* ."
+
                         catchError(stageResult: 'FAILURE') {
-                            CreateNMLink()
                             CypressRun("--browser chrome")
                         }
+
+                        SaveArtifacts()
+                        ClearWorkspace()
                      }
                     
                 }
@@ -96,30 +102,36 @@ pipeline {
                         }
                     }
                      steps {
+                        sh "cp -r /home/node/temp/* ."
+
                         catchError(stageResult: 'FAILURE') {
-                            CreateNMLink()
                             CypressRun("--browser firefox")
                         }
+
+                        SaveArtifacts()
+                        ClearWorkspace()
                     }
                     
                 }
             }
            
         }
-        stage('Tests cleanup'){
-            agent { 
-                docker { 
-                    image 'customcypress' 
-                    args "-t"
-                }
-            }
-            steps{
-                catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS'){
-                    MoveMediaAfterTests()
-                }
+        // stage('Clear Workspace'){
+        //     agent { 
+        //         docker { 
+        //             image 'customcypress' 
+        //             args "-t"
+        //         }
+        //     }
+        //     steps{
+
+        //         sh "rm -rf ./*"
+        //         // catchError(buildResult:'SUCCESS', stageResult: 'SUCCESS'){
+        //         //     MoveMediaAfterTests()
+        //         // }
                 
-            }
-        }
+        //     }
+        // }
     }
 }
 
