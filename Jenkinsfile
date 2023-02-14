@@ -34,19 +34,16 @@ def MoveMediaAfterTests(){
 }
 
 def testStage(browserName = "electron"){
-    stage('Tests in $browserName'){
 
-        steps {
-            sh "cp -r /home/node/temp/* ."
+    steps {
+        sh "cp -r /home/node/temp/* ."
 
-            catchError(stageResult: 'FAILURE') {
-                CypressRun(browserName)
-            }
-
-            SaveArtifacts()
-            ClearWorkspace()
+        catchError(stageResult: 'FAILURE') {
+            CypressRun(browserName)
         }
-        
+
+        SaveArtifacts()
+        ClearWorkspace()
     }
 }
 
@@ -65,7 +62,9 @@ pipeline {
     }
     
     stages {
-        testStage()
+        stage('Test Electron'){
+            testStage()
+        }
         // stage("Tests setup"){
         //     agent { 
         //         docker { 
