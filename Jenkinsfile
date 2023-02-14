@@ -33,16 +33,14 @@ def MoveMediaAfterTests(){
     sh 'mv .media media'    
 }
 
-def testStage(browserName = "electron"){
+def testStage(cypressOptions = ""){
 
     sh "cp -r /home/node/temp/* ."
 
     catchError(stageResult: 'FAILURE') {
-        CypressRun(browserName)
+        CypressRun(cypressOptions)
     }
 
-    SaveArtifacts()
-    ClearWorkspace()
 }
 
 pipeline {
@@ -63,6 +61,23 @@ pipeline {
         stage('Test Electron'){
             steps{
                 testStage()
+            }
+        }
+        stage('Test Chrome'){
+            steps{
+                testStage("--browser chrome")
+            }
+        }
+        stage('Test Firefox'){
+            steps{
+                testStage("--browser firefox")
+            }
+        }
+
+        post{
+            always{
+                SaveArtifacts()
+                ClearWorkspace()
             }
         }
         // stage("Tests setup"){
