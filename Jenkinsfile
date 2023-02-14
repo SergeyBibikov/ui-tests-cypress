@@ -53,7 +53,7 @@ pipeline {
         //         }
         //     }
             
-        }
+        
         stage('Test') {
             parallel{
                 stage('Electron'){
@@ -132,6 +132,7 @@ pipeline {
                 
         //     }
         // }
+        }
     }
 }
 
