@@ -41,6 +41,8 @@ def testStage(cypressOptions = ""){
         CypressRun(cypressOptions)
     }
 
+    SaveArtifacts()
+
 }
 
 pipeline {
@@ -172,7 +174,6 @@ pipeline {
 
     post{
         always{
-            SaveArtifacts()
             ClearWorkspace()
         }
     }
