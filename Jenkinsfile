@@ -2,9 +2,11 @@ def CypressRun(options){
     sh "npx cypress run ${options}"
 }
 def SaveArtifacts(){
-    sh "touch cypress/screenshots/dummy"
+    if (fileExists('cypress/screenshots')){
+        sh "touch cypress/screenshots/dummy"
+        archiveArtifacts artifacts: "cypress/screenshots/*", fingerprint: true         
+    }
                 
-    archiveArtifacts artifacts: "cypress/screenshots/*", fingerprint: true         
     archiveArtifacts artifacts: "cypress/videos/*", fingerprint: true  
 }
 
