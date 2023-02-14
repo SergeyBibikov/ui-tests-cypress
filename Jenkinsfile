@@ -4,8 +4,8 @@ def CypressRun(options){
 def SaveArtifacts(){
     sh "touch cypress/screenshots/dummy"
                 
-    archiveArtifacts "cypress/screenshots/*"        
-    archiveArtifacts "cypress/videos/*"
+    archiveArtifacts artifacts: "cypress/screenshots/*", fingerprint: true         
+    archiveArtifacts artifacts: "cypress/videos/*", fingerprint: true  
 }
 
 def ClearWorkspace(){
