@@ -80,11 +80,8 @@ pipeline {
 
         stage('Allure report'){
             agent { 
-                        docker { 
-                            image 'customcypress' 
-                            args "-t"
-                        }
-                    }
+                docker('openjdk:11.0.14-slim') 
+            }
             steps {
                 unstash 'allure-results'
                 sh 'ls'
