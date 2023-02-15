@@ -3,6 +3,8 @@ def CypressRun(options){
 }
 
 def SaveArtifacts(folderName){
+    sh "mkdir ${folderName}"
+    
     if (fileExists('cypress/screenshots')){
         sh "touch cypress/screenshots/dummy"
         sh "mv cypress/screenshots ${folderName}/screenshots"
