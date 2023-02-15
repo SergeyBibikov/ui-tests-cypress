@@ -20,7 +20,7 @@ def testStage(cypressOptions = "", folderName){
         sh "npx cypress run ${cypressOptions}"
     }
 
-    SaveArtifacts(folderName)
+    SaveArtifacts("${env.STAGE_NAME}")
     sh "rm -rf ./*"
 }
 
@@ -48,7 +48,7 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("", "${env.STAGE_NAME}")
+                        testStage("")
                     }
                 }
                 stage('Chrome'){
@@ -59,7 +59,7 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("--browser chrome", "${env.STAGE_NAME}")
+                        testStage("--browser chrome")
                     }
                 }
                 stage('Firefox'){
@@ -70,7 +70,7 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("--browser firefox", "${env.STAGE_NAME}")
+                        testStage("--browser firefox")
                     }
                 }
             }
