@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="28.534" tests="5" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-02-15T10:54:27" tests="0" file="cypress/e2e/homePage.cy.ts" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Homepage spec" timestamp="2023-02-15T10:54:27" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Language and anti-phishing banner" timestamp="2023-02-15T10:54:27" tests="1" time="10.928" failures="0">
+    <testcase name="Homepage spec Language and anti-phishing banner Anti-phishing banner should show on each language change and 
+        page text should have selected language" time="10.872" classname="Anti-phishing banner should show on each language change and 
+        page text should have selected language">
+    </testcase>
+  </testsuite>
+  <testsuite name="Propery search" timestamp="2023-02-15T10:54:38" tests="2" time="4.982" failures="0">
+    <testcase name="Homepage spec Propery search Deal type filters should have 5 types" time="2.512" classname="Deal type filters should have 5 types">
+    </testcase>
+    <testcase name="Homepage spec Propery search Estate type filters should have 5 types" time="2.430" classname="Estate type filters should have 5 types">
+    </testcase>
+  </testsuite>
+  <testsuite name="Real events" timestamp="2023-02-15T10:54:43" tests="2" time="12.587" failures="0">
+    <testcase name="Homepage spec Real events Login button should change background color on hover" time="3.404" classname="Login button should change background color on hover">
+    </testcase>
+    <testcase name="Homepage spec Real events User should be able to open ipoteka page using keyboard" time="8.991" classname="User should be able to open ipoteka page using keyboard">
+    </testcase>
+  </testsuite>
+</testsuites>

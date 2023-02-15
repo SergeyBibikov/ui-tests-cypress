@@ -49,6 +49,7 @@ pipeline {
                     }
                     steps{
                         testStage("")
+                        junit "test-results.xml"
                     }
                 }
                 stage('Chrome'){
