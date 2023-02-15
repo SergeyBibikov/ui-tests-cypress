@@ -79,8 +79,10 @@ pipeline {
         }
 
         stage('Allure report'){
-            unstash('allure-results')
-            sh 'ls'
+            steps {
+                unstash('allure-results')
+                sh 'ls'
+            }
         }
 
     }
