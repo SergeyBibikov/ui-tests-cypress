@@ -4,7 +4,7 @@ def CypressRun(options){
 
 def SaveArtifacts(folderName){
     sh "mkdir ${folderName}"
-    
+
     if (fileExists('cypress/screenshots')){
         sh "touch cypress/screenshots/dummy"
         sh "mv cypress/screenshots ${folderName}/screenshots"
@@ -27,59 +27,63 @@ def testStage(cypressOptions = "", folderName){
     }
 
     SaveArtifacts(folderName)
-
+    ClearWorkspace()
 }
-
-// def ClearMedia(){
-//     if (fileExists('media')) {
-//         sh 'rm -r media'
-//     }
-//     if (fileExists('.media')) {
-//         sh 'rm -r .media'
-//     }
-// }
-
-// def MoveMediaAfterTests(){
-//     sh 'mkdir .media'
-//     sh 'cp -r ./cypress/videos/ .media/'
-//     if (fileExists('./cypress/screenshots')){
-//         sh 'cp -r ./cypress/screenshots/ .media/'   
-//     }
-//     sh 'rm -r ./*'
-//     sh 'mv .media media'    
-// }
 
 
 pipeline {
 
-    // agent none
-     agent { 
-        docker { 
-            image 'customcypress' 
-            args "-t"
-        }
-    }
+    agent none
+    // agent { 
+    //     docker { 
+    //         image 'customcypress' 
+    //         args "-t"
+    //     }
+    // }
        
     options {
         ansiColor('xterm')
     }
     
     stages {
-        stage('Test Electron'){
-            steps{
-                testStage("", "electron")
+        stage('Test'){
+            parallel{
+                stage('Electron'){
+                    agent { 
+                        docker { 
+                            image 'customcypress' 
+                            args "-t"
+                        }
+                    }
+                    steps{
+                        testStage("", "electron")
+                    }
+                }
+                stage('Chrome'){
+                    agent { 
+                        docker { 
+                            image 'customcypress' 
+                            args "-t"
+                        }
+                    }
+                    steps{
+                        testStage("--browser chrome", "chrome")
+                    }
+                }
+                stage('Firefox'){
+                    agent { 
+                        docker { 
+                            image 'customcypress' 
+                            args "-t"
+                        }
+                    }
+                    steps{
+                        testStage("--browser firefox", "firefox")
+                    }
+                }
             }
         }
-        stage('Test Chrome'){
-            steps{
-                testStage("--browser chrome", "chrome")
-            }
-        }
-        stage('Test Firefox'){
-            steps{
-                testStage("--browser firefox", "firefox")
-            }
-        }
+       
 
      
         // stage("Tests setup"){
@@ -177,10 +181,10 @@ pipeline {
         // }
     }
 
-    post{
-        always{
-            ClearWorkspace()
-        }
-    }
+    // post{
+    //     always{
+    //         ClearWorkspace()
+    //     }
+    // }
 }
 
