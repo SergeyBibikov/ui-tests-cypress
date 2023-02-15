@@ -22,7 +22,7 @@ def testStage(cypressOptions = "", folderName){
 
     SaveArtifacts("${env.STAGE_NAME}")
     junit "results/*.xml"
-    stash(name:"allure-results", includes: "allure-results/*")
+    stash name:"allure-results", includes: "allure-results/*"
     sh "rm -rf ./*"
 }
 
@@ -86,7 +86,7 @@ pipeline {
                         }
                     }
             steps {
-                unstash('allure-results')
+                unstash 'allure-results'
                 sh 'ls'
             }
         }
