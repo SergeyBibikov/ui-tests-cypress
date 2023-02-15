@@ -10,7 +10,7 @@
     "copyFiles": "cp -r cypress $JENKINS_PIPELINE_WORKDIR && cp cypress.config.ts $JENKINS_PIPELINE_WORKDIR",
     "cypressPipeline": ". ./exportVars.sh && npm run copyFiles && npm run buildPipeline",
     "buildImage": "docker rmi customcypress; docker build -t customcypress .",
-    "push": "git push && npm run cypressPipeline && firefox localhost:8080",
+    "push": "git push && npm run cypressPipeline && firefox http://localhost:8080/job/Cypress_pipeline/",
     "serve:allure": "allure serve allure-results"
   },
   "repository": {
