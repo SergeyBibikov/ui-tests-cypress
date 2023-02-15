@@ -79,6 +79,12 @@ pipeline {
         }
 
         stage('Allure report'){
+            agent { 
+                        docker { 
+                            image 'customcypress' 
+                            args "-t"
+                        }
+                    }
             steps {
                 unstash('allure-results')
                 sh 'ls'
