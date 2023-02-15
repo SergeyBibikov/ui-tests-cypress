@@ -16,7 +16,7 @@ module.exports = defineConfig({
     ],
 
     env: {
-      allure: false,
+      allure: true,
       allureAvoidLoggingCommands: ['intercept']
     },
 
