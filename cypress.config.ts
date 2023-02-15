@@ -5,6 +5,9 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: "https://www.myhome.ge/ka/",
     reporter: 'junit',
+    reporterOptions: {
+      mochaFile: 'results/[hash].xml',
+    },
     blockHosts: [
       "www.google-analytics.com",
       "www.youtube.com",

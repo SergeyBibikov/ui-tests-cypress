@@ -21,7 +21,7 @@ def testStage(cypressOptions = "", folderName){
     }
 
     SaveArtifacts("${env.STAGE_NAME}")
-    junit "test-results.xml"
+    junit "results/*.xml"
     sh "rm -rf ./*"
 }
 
