@@ -21,6 +21,7 @@ def testStage(cypressOptions = "", folderName){
     }
 
     SaveArtifacts("${env.STAGE_NAME}")
+    junit "test-results.xml"
     sh "rm -rf ./*"
 }
 
@@ -49,7 +50,6 @@ pipeline {
                     }
                     steps{
                         testStage("")
-                        junit "test-results.xml"
                     }
                 }
                 stage('Chrome'){
