@@ -51,7 +51,7 @@ pipeline {
     stages {
         stage('Test'){
             parallel{
-                stage("$electronTests"){
+                stage("${electronTests}"){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -59,10 +59,10 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("", "$electronTests")
+                        testStage("", "${electronTests}")
                     }
                 }
-                stage("$chromeTests"){
+                stage("${chromeTests}"){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -70,10 +70,10 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("--browser chrome", "$chromeTests")
+                        testStage("--browser chrome", "${chromeTests}")
                     }
                 }
-                stage("$firefoxTests"){
+                stage("${firefoxTests}"){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -81,7 +81,7 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("--browser firefox", "$firefoxTests")
+                        testStage("--browser firefox", "${firefoxTests}")
                     }
                 }
             }
