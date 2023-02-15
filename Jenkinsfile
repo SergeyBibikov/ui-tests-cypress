@@ -1,6 +1,6 @@
-def CypressRun(options){
-    sh "npx cypress run ${options}"
-}
+// def CypressRun(options){
+//     sh "npx cypress run ${options}"
+// }
 
 def SaveArtifacts(folderName){
     sh "mkdir ${folderName}"
@@ -14,22 +14,25 @@ def SaveArtifacts(folderName){
     archiveArtifacts "${folderName}/videos/*"         
 }
 
-def ClearWorkspace(){
-    sh "rm -rf ./*"
-}
+// def ClearWorkspace(){
+//     sh "rm -rf ./*"
+// }
 
 def testStage(cypressOptions = "", folderName){
 
     sh "cp -r /home/node/temp/* ."
 
     catchError(stageResult: 'FAILURE') {
-        CypressRun(cypressOptions)
+        sh "npx cypress run ${cypressOptions}"
     }
 
     SaveArtifacts(folderName)
-    ClearWorkspace()
+    sh "rm -rf ./*"
 }
 
+def electronTests = "Electron"
+def chromeTests = "Ehrome"
+def firefoxTests = "Firefox"
 
 pipeline {
 
@@ -48,7 +51,7 @@ pipeline {
     stages {
         stage('Test'){
             parallel{
-                stage('Electron'){
+                stage(electronTests){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -56,10 +59,10 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("", "electron")
+                        testStage("", electronTests)
                     }
                 }
-                stage('Chrome'){
+                stage(chromeTests){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -67,10 +70,10 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("--browser chrome", "chrome")
+                        testStage("--browser chrome", chromeTests)
                     }
                 }
-                stage('Firefox'){
+                stage(firefoxTests){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -78,7 +81,7 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("--browser firefox", "firefox")
+                        testStage("--browser firefox", firefoxTests)
                     }
                 }
             }
