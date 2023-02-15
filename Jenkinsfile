@@ -1,39 +1,22 @@
 def CypressRun(options){
     sh "npx cypress run ${options}"
 }
-def SaveArtifacts(){
+
+def SaveArtifacts(folderName){
     if (fileExists('cypress/screenshots')){
         sh "touch cypress/screenshots/dummy"
-        archiveArtifacts "cypress/screenshots/*"       
+        sh "mv cypress/screenshots ${folderName}/screenshots"
+        archiveArtifacts "${folderName}/screenshots/*"       
     }
-                
-    archiveArtifacts "cypress/videos/*"
+    sh "mv cypress/videos ${folderName}/videos"
+    archiveArtifacts "${folderName}/videos/*"         
 }
 
 def ClearWorkspace(){
     sh "rm -rf ./*"
 }
 
-def ClearMedia(){
-    if (fileExists('media')) {
-        sh 'rm -r media'
-    }
-    if (fileExists('.media')) {
-        sh 'rm -r .media'
-    }
-}
-
-def MoveMediaAfterTests(){
-    sh 'mkdir .media'
-    sh 'cp -r ./cypress/videos/ .media/'
-    if (fileExists('./cypress/screenshots')){
-        sh 'cp -r ./cypress/screenshots/ .media/'   
-    }
-    sh 'rm -r ./*'
-    sh 'mv .media media'    
-}
-
-def testStage(cypressOptions = ""){
+def testStage(cypressOptions = "", folderName){
 
     sh "cp -r /home/node/temp/* ."
 
@@ -41,9 +24,29 @@ def testStage(cypressOptions = ""){
         CypressRun(cypressOptions)
     }
 
-    SaveArtifacts()
+    SaveArtifacts(folderName)
 
 }
+
+// def ClearMedia(){
+//     if (fileExists('media')) {
+//         sh 'rm -r media'
+//     }
+//     if (fileExists('.media')) {
+//         sh 'rm -r .media'
+//     }
+// }
+
+// def MoveMediaAfterTests(){
+//     sh 'mkdir .media'
+//     sh 'cp -r ./cypress/videos/ .media/'
+//     if (fileExists('./cypress/screenshots')){
+//         sh 'cp -r ./cypress/screenshots/ .media/'   
+//     }
+//     sh 'rm -r ./*'
+//     sh 'mv .media media'    
+// }
+
 
 pipeline {
 
@@ -62,17 +65,17 @@ pipeline {
     stages {
         stage('Test Electron'){
             steps{
-                testStage()
+                testStage("", "electron")
             }
         }
         stage('Test Chrome'){
             steps{
-                testStage("--browser chrome")
+                testStage("--browser chrome", "chrome")
             }
         }
         stage('Test Firefox'){
             steps{
-                testStage("--browser firefox")
+                testStage("--browser firefox", "firefox")
             }
         }
 
