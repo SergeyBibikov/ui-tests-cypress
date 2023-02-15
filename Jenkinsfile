@@ -51,7 +51,7 @@ pipeline {
     stages {
         stage('Test'){
             parallel{
-                stage(${electronTests}){
+                stage($electronTests){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -59,7 +59,7 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("", ${electronTests})
+                        testStage("", $electronTests)
                     }
                 }
                 stage(${chromeTests}){
