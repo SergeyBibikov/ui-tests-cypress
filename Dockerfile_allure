@@ -1,11 +1,11 @@
 FROM openjdk:11.0.14-slim
 
-RUN useradd -m allure
+RUN useradd -m jenkins
 
 USER 1000
 
-COPY allure-2.20.1 /home/allure
+COPY allure-2.20.1 /home/jenkins
 
-WORKDIR /home/allure/bin
+WORKDIR /home/jenkins/bin
 
 CMD ["bash"]
