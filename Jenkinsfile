@@ -85,9 +85,8 @@ pipeline {
             steps {
                 sh "rm -rf ./*"
                 unstash 'allure-results'
-                sh "whoami"
-                sh "cat /etc/passwd"
-                sh "ls -l /home/petya"
+                sh "cp -r /home/petya/* ."
+                sh "ls"
                 // sh '/home/allure/bin/allure generate allure-results'
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
