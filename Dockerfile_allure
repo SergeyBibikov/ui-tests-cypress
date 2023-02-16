@@ -1,13 +1,13 @@
 FROM openjdk:11.0.14-slim
 
-RUN useradd -m jenkins && chown -R jenkins /home/jenkins
+RUN useradd -m petya
 
-COPY allure-2.20.1 /home/jenkins
+# COPY allure-2.20.1 /home/petya
 
-RUN chown -R 1000:1000 /home/jenkins
+RUN chown -R 1000:1000 /home/petya
 
 USER 1000
 
-WORKDIR /home/jenkins/bin
+WORKDIR /home/petya
 
 CMD ["bash"]
