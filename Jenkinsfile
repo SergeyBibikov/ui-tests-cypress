@@ -82,7 +82,7 @@ pipeline {
             agent any
             steps {
                 sh "rm -rf ./*"
-                sh "mkdir -p /home/petya/temp/bin && cp -r /home/petya/bin/* /home/petya/temp/bin"
+                sh "cp -r /home/petya/bin/* /usr/local/bin"
                 unstash 'allure-results'
                 // sh "pwd && ls"
                 // sh '/home/allure/bin/allure generate allure-results'
