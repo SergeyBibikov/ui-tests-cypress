@@ -86,7 +86,7 @@ pipeline {
                 sh "rm -rf ./*"
                 unstash 'allure-results'
                 sh '/home/allure/bin/allure generate allure-results'
-                sh 'ls'
+                archiveArtifacts 'allure-report/*'
             }
         }
 
