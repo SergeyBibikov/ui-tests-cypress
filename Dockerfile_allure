@@ -2,9 +2,11 @@ FROM openjdk:11.0.14-slim
 
 RUN useradd -m jenkins && chown -R jenkins /home/jenkins
 
-USER 1000
-
 COPY allure-2.20.1 /home/jenkins
+
+RUN chown -R 1000:1000 /home/jenkins
+
+USER 1000
 
 WORKDIR /home/jenkins/bin
 
