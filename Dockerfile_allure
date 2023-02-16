@@ -1,6 +1,6 @@
 FROM openjdk:11.0.14-slim
 
-RUN useradd -m jenkins
+RUN useradd -m jenkins && chown -R jenkins /home/jenkins
 
 USER 1000
 
