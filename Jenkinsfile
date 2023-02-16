@@ -78,17 +78,12 @@ pipeline {
             }
         }
 
-        stage('Workspace cleanup'){
-            steps{
-                sh "rm -rf ./*"
-            }
-        }
-
         stage('Allure report'){
             agent { 
                 docker('alluregenerator') 
             }
             steps {
+                sh "rm -rf ./*"
                 unstash 'allure-results'
                 sh '/home/allure/bin/allure generate allure-results'
                 sh 'ls'
