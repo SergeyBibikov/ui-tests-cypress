@@ -86,13 +86,7 @@ pipeline {
                 sh "rm -rf ./*"
                 unstash 'allure-results'
                 sh '/home/allure/bin/allure generate allure-results'
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    reportDir: 'allure-report',
-                    reportFiles: 'index.html', 
-                    reportName: 'Test run results',
-                    keepAll: false]) 
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'allure-report', reportFiles: 'index.html', reportName: 'Report', reportTitles: '', useWrapperFileDirectly: true])
             }
         }
 
