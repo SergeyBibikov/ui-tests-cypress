@@ -79,9 +79,7 @@ pipeline {
         }
 
         stage('Allure report'){
-            agent { 
-                docker('alluregenerator') 
-            }
+            agent any
             steps {
                 sh "rm -rf ./*"
                 // sh "mkdir /home/petya/temp && cp -r /home/petya/bin/* /home/petya/temp"
