@@ -79,12 +79,12 @@ pipeline {
         }
 
         stage('Allure report'){
-            agent any
+            agent {
+                docker('alluregenerator')
+            }
             steps {
                 sh "rm -rf ./*"
                 unstash 'allure-results'
-                // sh "pwd && ls"
-                // sh '/home/allure/bin/allure generate allure-results'
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
