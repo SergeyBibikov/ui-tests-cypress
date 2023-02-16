@@ -84,7 +84,7 @@ pipeline {
             }
             steps {
                 sh "rm -rf ./*"
-                sh "mkdir /home/petya/temp && cp -r /home/petya/* /home/petya/temp"
+                sh "mkdir /home/petya/temp && cp -r /home/petya/bin/* /home/petya/temp"
                 sh "cd /home/petya/temp"
                 unstash 'allure-results'
                 sh "pwd && ls"
