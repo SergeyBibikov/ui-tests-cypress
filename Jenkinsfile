@@ -78,11 +78,14 @@ pipeline {
             }
         }
 
+
+
         stage('Allure report'){
             agent { 
                 docker('alluregenerator') 
             }
             steps {
+                sh 'ls'
                 unstash 'allure-results'
                 sh './allure generate allure-results'
                 sh 'ls'
