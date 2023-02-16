@@ -82,7 +82,6 @@ pipeline {
             agent any
             steps {
                 sh "rm -rf ./*"
-                sh "cp -r /home/petya/bin/* /usr/local/bin"
                 unstash 'allure-results'
                 // sh "pwd && ls"
                 // sh '/home/allure/bin/allure generate allure-results'
