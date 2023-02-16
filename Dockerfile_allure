@@ -4,7 +4,7 @@ RUN useradd -m petya
 
 COPY allure-2.20.1 /home/petya
 
-RUN cp -r /home/petya/bin/* /usr/local/bin
+RUN cd /usr/local/bin && ln -s /home/petya/bin/allure allure
 
 USER 1000
 
