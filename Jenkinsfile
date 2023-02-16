@@ -87,9 +87,10 @@ pipeline {
                 unstash 'allure-results'
                 sh "whoami"
                 sh "cat /etc/passwd"
+                sh "ls -l /home/jenkins"
+                sh 'whereis allure'
                 // sh '/home/allure/bin/allure generate allure-results'
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
-                sh 'whereis allure'
             }
         }
 
