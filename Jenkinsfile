@@ -18,10 +18,10 @@ def testStage(cypressOptions = "", folderName){
 
     catchError(stageResult: 'FAILURE') {
         sh "npx cypress run ${cypressOptions}"
+        SaveArtifacts("${env.STAGE_NAME}")
     }
 
-    SaveArtifacts("${env.STAGE_NAME}")
-    junit "results/*.xml"
+    // junit "results/*.xml"
     stash name:"allure-results", includes: "allure-results/*"
     sh "rm -rf ./*"
 }
