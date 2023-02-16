@@ -85,7 +85,7 @@ pipeline {
             steps {
                 sh "rm -rf ./*"
                 unstash 'allure-results'
-                sh '/home/allure/bin/allure generate allure-results'
+                // sh '/home/allure/bin/allure generate allure-results'
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
