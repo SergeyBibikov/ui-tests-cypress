@@ -84,10 +84,9 @@ pipeline {
             }
             steps {
                 sh "rm -rf ./*"
-                sh "mkdir /home/petya/temp && cp -r /home/petya/bin/* /home/petya/temp"
-                sh "cd /home/petya/temp"
+                // sh "mkdir /home/petya/temp && cp -r /home/petya/bin/* /home/petya/temp"
                 unstash 'allure-results'
-                sh "pwd && ls"
+                // sh "pwd && ls"
                 // sh '/home/allure/bin/allure generate allure-results'
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
