@@ -1,0 +1,11 @@
+FROM openjdk:11.0.14-slim
+
+RUN useradd -m allure
+
+USER 1000
+
+COPY allure-2.20.1 /home/allure
+
+WORKDIR /home/allure/bin
+
+CMD ["bash"]

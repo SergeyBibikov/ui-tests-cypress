@@ -107,5 +107,5 @@ dist
 videos
 screenshots
 exportVars.sh
-allure-results
 results
+allure*

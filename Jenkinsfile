@@ -80,10 +80,11 @@ pipeline {
 
         stage('Allure report'){
             agent { 
-                docker('openjdk:11.0.14-slim') 
+                docker('alluregenerator') 
             }
             steps {
                 unstash 'allure-results'
+                sh './allure generate allure-results'
                 sh 'ls'
             }
         }
