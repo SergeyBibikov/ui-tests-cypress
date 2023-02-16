@@ -86,7 +86,12 @@ pipeline {
                 sh "rm -rf ./*"
                 unstash 'allure-results'
                 sh '/home/allure/bin/allure generate allure-results'
-                archiveArtifacts 'allure-report/*'
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    reportDir:'allure-report',
+                    reportFiles: 'index.html', 
+                    reportName: 'Test run results']) 
             }
         }
 
