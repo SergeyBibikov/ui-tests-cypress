@@ -3,7 +3,7 @@ import { shouldBeVisible, shouldHaveText } from "../allureSteps/assertions"
 import { skipOn } from "@cypress/skip-test"
 const a = Cypress.Allure.reporter.getInterface()
 
-describe.skip('Homepage spec', () => {
+describe('Homepage spec', () => {
 
   a.epic('Homepage')
 
