@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "rm -rf allure-results && npx cypress run",
+    "spec": "npx cypress run -s cypress/e2e/$S --headed",
     "open": "npx cypress open",
     "buildPipeline": "curl --user Admin:$JENKINS_TOKEN $JENKINS_HOST/job/cypress_pipeline/build?token=runCypressTests",
     "copyFiles": "cp -r cypress $JENKINS_PIPELINE_WORKDIR && cp cypress.config.ts $JENKINS_PIPELINE_WORKDIR",
