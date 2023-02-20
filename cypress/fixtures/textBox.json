@@ -1,0 +1,6 @@
+{
+    "userName": "Mark",
+    "email": "Mark@gmail.com",
+    "currentAddress": "SomeCity, SomeStreet, 42",
+    "permanentAddress": "AnotherCity, AnotherStreet, 10"
+}

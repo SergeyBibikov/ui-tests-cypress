@@ -4,19 +4,20 @@ import { ElementPageOptions, ElementsPage } from "../pageObjects/demoqa/elements
 describe('Text box suite', { baseUrl: "https://demoqa.com" }, () => {
 
     beforeEach(() => {
+        cy.fixture('textBox.json').as('testData')
         cy.intercept(/ad/ig, { statusCode: 503 })
         ElementsPage.open(ElementPageOptions.TEXT_BOX)
     })
+
     it('Successful form submission if all fields are filled', function () {
 
-        const uName = "Mark"
-        const uEmail = "Mark@gmail.com"
+        const { userName, email, currentAddress, permanentAddress } = this.testData
 
         new TextBoxForm()
-            .fillUserName(uName)
-            .fillUserEmail(uEmail)
-            .fillUserCurrentAddress("SomeCity, SomeStreet, 42")
-            .fillUserPermanentAddress("SomeCity, SomeStreet, 42")
+            .fillUserName(userName)
+            .fillUserEmail(email)
+            .fillUserCurrentAddress(currentAddress)
+            .fillUserPermanentAddress(permanentAddress)
             .submitForm()
 
         cy
@@ -25,12 +26,28 @@ describe('Text box suite', { baseUrl: "https://demoqa.com" }, () => {
             .as("output")
             .should('have.length', 1)
 
-        cy.get("@output").eq(0).find('#name').should('contain.text', uName)
-        cy.get("@output").eq(0).find('#email').should('contain.text', uEmail)
+        cy.get("@output").eq(0).find('#name').should('contain.text', userName)
+        cy.get("@output").eq(0).find('#email').should('contain.text', email)
+        cy.get("@output").eq(0).find('#currentAddress').should('contain.text', currentAddress)
+        cy.get("@output").eq(0).find('#permanentAddress').should('contain.text', permanentAddress)
     })
 
-    it.skip('Successful form submission if only required fields are filled', function () {
+    it('Successful form submission if only required fields are filled', function () {
+        const { userName, email } = this.testData
 
+        new TextBoxForm()
+            .fillUserName(userName)
+            .fillUserEmail(email)
+            .submitForm()
+
+        cy
+            .get('#output')
+            .find('div')
+            .as("output")
+            .should('have.length', 1)
+
+        cy.get("@output").eq(0).find('#name').should('contain.text', userName)
+        cy.get("@output").eq(0).find('#email').should('contain.text', email)
     })
 
 })
