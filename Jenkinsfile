@@ -42,7 +42,7 @@ pipeline {
     stages {
         stage('Test'){
             parallel{
-                stage('Homepage spec'){
+                stage('Homepage'){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -53,7 +53,7 @@ pipeline {
                         testStage("-s cypress/e2e/homePage*", firstSpec)
                     }
                 }
-                stage('TextBox spec'){
+                stage('TextBox'){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -64,7 +64,7 @@ pipeline {
                         testStage("-s cypress/e2e/textBox*", seconSpec)
                     }
                 }
-                stage('CheckBox spec'){
+                stage('CheckBox'){
                     agent { 
                         docker { 
                             image 'customcypress' 
