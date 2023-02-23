@@ -80,9 +80,11 @@ pipeline {
                 unstash "tb"
                 unstash "cb"
                 sh 'ls -a'
-                if(fileExists("allure-results")){
-                    sh 'rm -rf allure-results'
-                }
+                sh  '''
+                    if [ -d allure-results ] 
+                    then rm -rf allure-results
+                    fi
+                    '''
                 sh 'mkdir allure-results'
                 sh 'cp -r hp/* allure-results/*'
                 sh 'cp -r tb/* allure-results/*'
