@@ -89,11 +89,11 @@ pipeline {
                     then 
                         rm -rf allure-results
                     fi
+                    mkdir allure-results
                     '''
-                sh 'mkdir allure-results'
-                sh "cp -r ${firstSpec}/* allure-results/*"
-                sh "cp -r ${secondSpec}/* allure-results/*"
-                sh "cp -r ${thirdSpec}/* allure-results/*"
+                sh "cp -r ${firstSpec}/* allure-results/"
+                sh "cp -r ${secondSpec}/* allure-results/"
+                sh "cp -r ${thirdSpec}/* allure-results/"
                 stash name: 'allure-results', includes: "allure-results/*"
             }
         }
