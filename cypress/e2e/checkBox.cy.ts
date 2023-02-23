@@ -1,3 +1,4 @@
+import { CheckBoxesForm } from "../pageObjects/demoqa/components/checkBoxesForm"
 import { ElementPageOptions, ElementsPage } from "../pageObjects/demoqa/elementsPage"
 
 describe('Check box', () => {
@@ -8,6 +9,10 @@ describe('Check box', () => {
     })
 
     it('All inner folders should be checked on Home check', function () {
+        new CheckBoxesForm().toggleFolder('Home').checkFolder('Desktop');
+    })
+
+    it.skip('The unfolded folded icon shoud change icon fill color', function () {
 
     })
 })

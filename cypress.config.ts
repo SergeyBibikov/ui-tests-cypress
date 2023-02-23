@@ -3,7 +3,8 @@ import { log as cl } from './cypress/support/tasks'
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: "https://www.myhome.ge/ka/",
+    // baseUrl: "https://www.myhome.ge/ka/",
+    baseUrl: "https://demoqa.com",
     reporter: 'junit',
     reporterOptions: {
       mochaFile: 'results/[hash].xml',
