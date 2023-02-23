@@ -82,7 +82,8 @@ pipeline {
                 sh 'ls -a'
                 sh  '''
                     if [ -d allure-results ] 
-                    then rm -rf allure-results
+                    then 
+                        rm -rf allure-results
                     fi
                     '''
                 sh 'mkdir allure-results'
