@@ -22,9 +22,13 @@ def testStage(cypressOptions = "", stashName){
     }
 
     // junit "results/*.xml"
-    stash name: stashName, includes: "allure-results/*"
+    sh "mv allure-results ${stashName}"
+    stash name: stashName, includes: "${stashName}/*"
     sh "rm -rf ./*"
 }
+def firstSpec = 'hp'
+def secondSpec = 'tb'
+def thirdSpec = 'cb'
 
 pipeline {
 
@@ -46,7 +50,7 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("-s cypress/e2e/homePage*", "hp")
+                        testStage("-s cypress/e2e/homePage*", firstSpec)
                     }
                 }
                 stage('TextBox spec'){
@@ -57,7 +61,7 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("-s cypress/e2e/textBox*", "tb")
+                        testStage("-s cypress/e2e/textBox*", seconSpec)
                     }
                 }
                 stage('CheckBox spec'){
@@ -68,7 +72,7 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("-s cypress/e2e/checkBox*", "cb")
+                        testStage("-s cypress/e2e/checkBox*", thirdSpec)
                     }
                 }
             }
@@ -76,9 +80,9 @@ pipeline {
         stage('Consolidate report'){
             agent any
             steps{
-                unstash "hp"
-                unstash "tb"
-                unstash "cb"
+                unstash firstSpec
+                unstash secondSpec
+                unstash thirdSpec
                 sh 'ls -a'
                 sh  '''
                     if [ -d allure-results ] 
@@ -87,9 +91,9 @@ pipeline {
                     fi
                     '''
                 sh 'mkdir allure-results'
-                sh 'cp -r hp/* allure-results/*'
-                sh 'cp -r tb/* allure-results/*'
-                sh 'cp -r cb/* allure-results/*'
+                sh "cp -r ${firstSpec}/* allure-results/*"
+                sh "cp -r ${secondSpec}/* allure-results/*"
+                sh "cp -r ${thirdSpec}/* allure-results/*"
                 stash name: 'allure-results', includes: "allure-results/*"
             }
         }
