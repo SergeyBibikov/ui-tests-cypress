@@ -61,7 +61,7 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("-s cypress/e2e/textBox*", seconSpec)
+                        testStage("-s cypress/e2e/textBox*", secondSpec)
                     }
                 }
                 stage('CheckBox'){
