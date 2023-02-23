@@ -46,7 +46,7 @@ pipeline {
                     agent { 
                         docker { 
                             image 'customcypress' 
-                            // args "-t"
+                            args "-t"
                         }
                     }
                     steps{
@@ -57,7 +57,7 @@ pipeline {
                     agent { 
                         docker { 
                             image 'customcypress' 
-                            // args "-t"
+                            args "-t"
                         }
                     }
                     steps{
@@ -68,7 +68,7 @@ pipeline {
                     agent { 
                         docker { 
                             image 'customcypress' 
-                            // args "-t"
+                            args "-t"
                         }
                     }
                     steps{
