@@ -12,7 +12,7 @@ def SaveArtifacts(folderName){
 }
 
 
-def testStage(cypressOptions = "", folderName){
+def testStage(cypressOptions = "", stashName){
 
     sh "cp -r /home/node/temp/* ."
 
@@ -22,13 +22,9 @@ def testStage(cypressOptions = "", folderName){
     }
 
     // junit "results/*.xml"
-    stash name:"allure-results", includes: "allure-results/*"
+    stash name: stashName, includes: "allure-results/*"
     sh "rm -rf ./*"
 }
-
-def electronTests = "Electron"
-def chromeTests = "Ehrome"
-def firefoxTests = "Firefox"
 
 pipeline {
 
@@ -42,7 +38,7 @@ pipeline {
     stages {
         stage('Test'){
             parallel{
-                stage('Electron'){
+                stage('Homepage spec'){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -50,10 +46,10 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("")
+                        testStage("-s cypress/e2e/homePage*", "hp")
                     }
                 }
-                stage('Chrome'){
+                stage('TextBox spec'){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -61,10 +57,10 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("--browser chrome")
+                        testStage("-s cypress/e2e/textBox*", "tb")
                     }
                 }
-                stage('Firefox'){
+                stage('CheckBox spec'){
                     agent { 
                         docker { 
                             image 'customcypress' 
@@ -72,12 +68,25 @@ pipeline {
                         }
                     }
                     steps{
-                        testStage("--browser firefox")
+                        testStage("-s cypress/e2e/checkBox*", "cb")
                     }
                 }
             }
         }
-
+        stage('Consolidate report'){
+            agent any
+            steps{
+                unstash "hp"
+                unstash "tb"
+                unstash "cb"
+                sh 'ls -a'
+                sh 'mkdir allure-results'
+                sh 'cp -r hp/* allure-results/*'
+                sh 'cp -r tb/* allure-results/*'
+                sh 'cp -r cb/* allure-results/*'
+                stash name: 'allure-results', includes: "allure-results/*"
+            }
+        }
         stage('Allure report'){
             agent {
                 docker('alluregenerator')
